@@ -130,6 +130,25 @@ void test8(Bank *bank,int account1) {
     cout << RED << BOLD << "----------" << RESET << endl;
 }
 
+void test9(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 9] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to add and remove money from account." << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->addMoneyToAccount(account1, 100);
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->removeMoneyFromAccount(account1, 75);
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
 
 int main() {
     Bank *bank = new Bank(1000);
@@ -144,7 +163,7 @@ int main() {
     test6(bank, account1);
     test7(bank);
     test8(bank, account1);
-
+    test9(bank, account1);
     delete bank;
     cout << "--- END ---" << endl;
 }

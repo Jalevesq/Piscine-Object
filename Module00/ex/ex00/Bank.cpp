@@ -120,3 +120,47 @@ void Bank::payOffLoan(int accountID, int amountToPayOff) {
     account.payOffLoan(amountToPayOff);
     std::cout << "pay offf: " << std::to_string(amountToPayOff) << std::endl;
 }
+
+void Bank::addMoneyToAccount(int accountID, int amountToAdd) {
+    Account& account = this->getAccount(accountID);
+    int accountMoney = account.getMyValue();
+    try {
+        if (amountToAdd <= 0)
+            throw std::runtime_error("The amount to transfer must be positive.");
+        if (amountToAdd > this->liquidity)
+            throw std::runtime_error("The bank does not have enough money.");
+        if (amountToAdd + accountMoney >= std::numeric_limits<int>::max())
+            throw std::runtime_error("Addition exceeds maximum account value limit.");
+    } catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        return;
+    }
+
+    int bankPercentage = (amountToAdd * 5) / 100;
+    int realAdd = amountToAdd - bankPercentage;
+
+    std::cout << "Adding " << realAdd << " to " << accountID << std::endl;
+    this->liquidity -= (amountToAdd - bankPercentage);
+    account.addMoney(realAdd);
+}
+
+
+void Bank::removeMoneyFromAccount(int accountID, int amountToRemove) {
+    Account& account = this->getAccount(accountID);
+    int accountMoney = account.getMyValue();
+    try {
+        if (amountToRemove <= 0)
+            throw std::runtime_error("The amount to remove must be positive.");
+        if (amountToRemove > accountMoney)
+            throw std::runtime_error("The account does not have enough money.");
+        if (amountToRemove + this->liquidity >= std::numeric_limits<int>::max())
+            throw std::runtime_error("Can't remoce, bank as too much money.");
+    } catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        return;
+    }
+
+    std::cout << "Removing " << amountToRemove << " from " << accountID << std::endl;
+    this->liquidity += amountToRemove;
+    account.removeMoney(amountToRemove);
+}

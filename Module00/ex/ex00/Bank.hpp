@@ -8,7 +8,6 @@
 #include <climits>
 #include "Account.hpp"
 
-// Mandatory: • The attributes of the structures must not be modifiable from the outside
 class Bank {
     public:
         Bank(int liquidity);
@@ -17,16 +16,18 @@ class Bank {
         int     createAccount();
         void    deleteAccount(int accountID);
 
+        void addMoneyToAccount(int accountID, int amountToAdd);
+        void removeMoneyFromAccount(int accountID, int amountToRemove);
+
 
         const int& getBankLiquidity() const;
         const int& getAccountValue(int accountID) const;
         const int& getAccountLoan(int accountID) const;
 
-        // void transferMoney(int fromAccountID, int toAccountID, int amount);
         void giveLoan(int accountID, int amountToLoan);
         void payOffLoan(int accountID, int amountToPayOff);
     private:
-        std::map<int, Account*> clientAccount; // Mandatory: Never have two identical IDs
+        std::map<int, Account*> clientAccount;
         std::set<int> availableIDs;
         int liquidity;
         int nextID;

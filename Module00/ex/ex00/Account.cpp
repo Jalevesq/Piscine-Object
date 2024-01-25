@@ -32,3 +32,11 @@ void Account::payOffLoan(int amountToPayOff) {
     this->value -= amountToPayOff;
     this->loan -= amountToPayOff;
 }
+
+void Account::addMoney(int amountToAdd) {
+    this->value += amountToAdd;
+}
+
+void Account::removeMoney(int amountToRemove) {
+    this->value -= amountToRemove;
+}
