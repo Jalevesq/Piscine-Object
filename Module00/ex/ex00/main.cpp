@@ -9,6 +9,9 @@
 #include "Account.hpp"
 #include "Bank.hpp"
 
-int main() {
+using std::cout;
+using std::endl;
 
+int main() {
+    Bank bank = Bank(1000);
 }

@@ -6,6 +6,7 @@ MAGENTA := \033[0;35m
 CYAN := \033[0;36m
 WHITE := \033[0;37m
 RESET := \033[0m
+BOLD := \033[1m
 
 # Project Name
 NAME := BankAccount
@@ -42,7 +43,7 @@ endef
 all: $(OBJS_PREFIX) $(NAME)
 	@if [ $(COMPILED_COUNT) -gt 0 ]; then \
 		printf "\033[K"; \
-		echo "$(GREEN)Compilation finished$(RESET) [$(TOTAL_FILES)/$(TOTAL_FILES)]"; \
+		echo "$(GREEN)$(BOLD)Compilation finished [$(TOTAL_FILES)/$(TOTAL_FILES)]$(RESET)"; \
 	fi
 
 $(NAME): $(OBJS)
@@ -58,12 +59,13 @@ $(OBJS_PREFIX)%.o: $(PATH_PREFIX)%.cpp
 clean:
 	@printf "$(YELLOW)Cleaning up object files...$(RESET)"
 	@rm -rf $(OBJS_PREFIX)
-	@printf "\r\033[K$(GREEN)Cleaning up object files done!$(RESET)\n"
+	@printf "\r\033[K$(GREEN)Done cleaning up object files$(RESET)\n"
 
 
 fclean: clean
-	@echo "$(RED)Removing executable $(NAME)...$(RESET)"
+	@printf "$(RED)Removing executable $(NAME)...$(RESET)"
 	@rm -f $(NAME)
+	@printf "\r\033[K$(GREEN)Done removing executable $(NAME)$(RESET)\n"
 
 re:
 	@echo "$(MAGENTA)Recompiling $(NAME)...$(RESET)"
