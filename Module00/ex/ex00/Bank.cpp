@@ -17,7 +17,8 @@ Bank::Bank(int liquidity) {
 Bank::~Bank() {
     std::cout << "Bank destructor called" << std::endl;
     for (std::map<int, Account*>::iterator it = this->clientAccount.begin(); it != this->clientAccount.end(); it++)
-        delete (*it).second;
+        if ((*it).second)
+            delete (*it).second;
 }
 
 int Bank::generateID() {
@@ -121,7 +122,7 @@ void Bank::payOffLoan(int accountID, int amountToPayOff) {
     std::cout << "pay offf: " << std::to_string(amountToPayOff) << std::endl;
 }
 
-void Bank::addMoneyToAccount(int accountID, int amountToAdd) {
+void Bank::addMoneyAccountBank(int accountID, int amountToAdd) {
     Account& account = this->getAccount(accountID);
     int accountMoney = account.getMyValue();
     try {
@@ -139,13 +140,13 @@ void Bank::addMoneyToAccount(int accountID, int amountToAdd) {
     int bankPercentage = (amountToAdd * 5) / 100;
     int realAdd = amountToAdd - bankPercentage;
 
-    std::cout << "Adding " << realAdd << " to " << accountID << std::endl;
+    std::cout << "Giving: " << std::to_string(amountToAdd) << ", Bank percentage: " << std::to_string(bankPercentage) << ", Real give: " << std::to_string(realAdd) << std::endl;
     this->liquidity -= (amountToAdd - bankPercentage);
     account.addMoney(realAdd);
 }
 
 
-void Bank::removeMoneyFromAccount(int accountID, int amountToRemove) {
+void Bank::removeMoneyAccountBank(int accountID, int amountToRemove) {
     Account& account = this->getAccount(accountID);
     int accountMoney = account.getMyValue();
     try {
@@ -163,4 +164,25 @@ void Bank::removeMoneyFromAccount(int accountID, int amountToRemove) {
     std::cout << "Removing " << amountToRemove << " from " << accountID << std::endl;
     this->liquidity += amountToRemove;
     account.removeMoney(amountToRemove);
+}
+
+void Bank::addMoneyAccountOutside(int accountID, int amountToAdd) {
+    Account& account = this->getAccount(accountID);
+    int accountMoney = account.getMyValue();
+    try {
+        if (amountToAdd <= 0)
+            throw std::runtime_error("The amount to transfer must be positive.");
+        if (amountToAdd + accountMoney >= std::numeric_limits<int>::max())
+            throw std::runtime_error("Addition exceeds maximum account value limit.");
+    } catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        return;
+    }
+
+    int bankPercentage = (amountToAdd * 5) / 100;
+    int realAdd = amountToAdd - bankPercentage;
+
+    std::cout << "Giving: " << std::to_string(amountToAdd) << ", Bank percentage: " << std::to_string(bankPercentage) << ", Real give: " << std::to_string(realAdd) << std::endl;
+    account.addMoney(realAdd);
+    this->liquidity += bankPercentage;
 }

@@ -16,9 +16,10 @@ class Bank {
         int     createAccount();
         void    deleteAccount(int accountID);
 
-        void addMoneyToAccount(int accountID, int amountToAdd);
-        void removeMoneyFromAccount(int accountID, int amountToRemove);
+        void addMoneyAccountBank(int accountID, int amountToAdd);
+        void removeMoneyAccountBank(int accountID, int amountToRemove);
 
+        void addMoneyAccountOutside(int accountID, int amountToAdd);
 
         const int& getBankLiquidity() const;
         const int& getAccountValue(int accountID) const;

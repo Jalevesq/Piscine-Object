@@ -137,17 +137,57 @@ void test9(Bank *bank, int account1) {
     cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
     cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
     cout << YELLOW << BOLD << "- Action -" << RESET << endl;
-    bank->addMoneyToAccount(account1, 100);
+    bank->addMoneyAccountBank(account1, 100);
     cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
     cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
     cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
     cout << YELLOW << BOLD << "- Action -" << RESET << endl;
-    bank->removeMoneyFromAccount(account1, 75);
+    bank->removeMoneyAccountBank(account1, 75);
     cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
     cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
     cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
     cout << RED << BOLD << "----------" << RESET << endl;
 }
+
+
+void test10(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 10] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to give a add money from outside the bank" << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->addMoneyAccountOutside(account1, 935); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
+void test11(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 11] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Multiple test" << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->addMoneyAccountOutside(account1, 1000); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->giveLoan(account1, 1000); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->payOffLoan(account1, 1000); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
 
 
 int main() {
@@ -164,6 +204,8 @@ int main() {
     test7(bank);
     test8(bank, account1);
     test9(bank, account1);
+    test10(bank, account1);
+    test11(bank, account1);
     delete bank;
     cout << "--- END ---" << endl;
 }
