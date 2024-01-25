@@ -1,9 +1,9 @@
 #include "Account.hpp"
 
-Account::Account(int accountID) {
+Account::Account(int accountID, int value) {
     std::cout << "Account constructor called" << std::endl;
     this->id = accountID;
-    this->value = 0;
+    this->value = value;
     this->loan = 0;
 }
 
@@ -21,4 +21,14 @@ const int& Account::getMyLoan() const {
 
 const int& Account::getMyValue() const {
     return (this->value);
+}
+
+
+bool Account::addLoan(int amountToAdd) {
+    if (amountToAdd + this->loan >= std::numeric_limits<int>::max()) {
+        std::cout << "Loan addition exceeds maximum account loan limit. Nothing has been loaned." << std::endl;
+        return false;
+    }
+
+    return true;
 }

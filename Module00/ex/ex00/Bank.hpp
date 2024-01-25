@@ -17,22 +17,23 @@ class Bank {
         int     createAccount();
         void    deleteAccount(int accountID);
 
-        const int& getBankLiquidity() const;
 
-        // void addLiquidity(int amountToAdd);
-        // void removeLiquidity(int amountToRemove);
-        // void addMoneyToAccount(int accountID, int amountToAdd); // Mandatory: The bank must receive 5% of each money inflow on client accounts
-        // void removeMoneyFromAccount(int accountID, int amountToRemove);
-        // void giveLoan(int accountID, int amountToLoan);
-        // void payOffLoan(int accountID, int amountToPayOff);
+        const int& getBankLiquidity() const;
+        const int& getAccountValue(int accountID) const;
+        const int& getAccountLoan(int accountID) const;
+
+        // void transferMoney(int fromAccountID, int toAccountID, int amount);
+        void giveLoan(int accountID, int amountToLoan);
+        void payOffLoan(int accountID, int amountToPayOff);
     private:
         std::map<int, Account*> clientAccount; // Mandatory: Never have two identical IDs
-        int liquidity;
-
         std::set<int> availableIDs;
+        int liquidity;
+        int nextID;
+
+        Account& getAccount(int accountID) const;
         int generateID();
 
-        int nextID;
 };
 
 #endif
