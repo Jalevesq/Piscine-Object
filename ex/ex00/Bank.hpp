@@ -18,7 +18,7 @@ class Bank {
         // removeMoneyFromAccount();
         // giveLoanToAccount(); // Mandatory: The bank must be able to give a loan to a customer, within the limits of its funds
     private:
-        std::map<int, std::vector<Account *>> clientAccount; // Mandatory: Never have two identical IDs
+        std::map<int, std::vector<Account *> > clientAccount; // Mandatory: Never have two identical IDs
         int liquidity;
         //
 };
