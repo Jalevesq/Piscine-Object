@@ -14,6 +14,9 @@ class Bank {
         // createAccount();
         // deleteAccount();
         // getAccount();
+        // const int& getBankLiquidity();
+        // void setNewBankLiquidity
+        
         // addMoneyToAccount(); // Mandatory: The bank must receive 5% of each money inflow on client accounts
         // removeMoneyFromAccount();
         // giveLoanToAccount(); // Mandatory: The bank must be able to give a loan to a customer, within the limits of its funds
