@@ -1,10 +1,3 @@
-// Mandatory:
-// • If it makes sense, the creation of a Getter and a Setter is mandatory. Getter(s) by
-// copy will not be accepted
-// • If it makes sense, the creation of a const Getter is mandatory. const Getter(s) by
-// copy will not be accepted
-// During the evaluation, each choice made during this exercise must be defended.
-
 #include <iostream>
 #include "Account.hpp"
 #include "Bank.hpp"
@@ -52,22 +45,106 @@ void test2(Bank *bank, int account1) {
     cout << RED << BOLD << "----------" << RESET << endl;
 }
 
-int main() {
-    Bank bank = Bank(1000);
+void test3(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 3] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to loan more money than the bank own" << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->giveLoan(account1, 10000); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
 
+
+void test4() {
+    Bank bank(2147483647);
     int account1 = bank.createAccount();
-    int account2 = bank.createAccount();
-
+    cout << RED << BOLD << "--- [Test 4] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to give INT MAX loan." << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
     cout << "account1 - ID: " << account1 << ", Value: " << bank.getAccountValue(account1) << ", Loan: " << bank.getAccountLoan(account1) << endl;
-    cout << "account2 - ID: " << account2 << ", Value: " << bank.getAccountValue(account2) << ", Loan: " << bank.getAccountLoan(account2) << endl;
-
-    test1(&bank, account1);
-    test2(&bank, account1);
-    cout << "Give loan 100" << endl;
-    bank.giveLoan(account1, 100);
+    cout << "Bank - Liquidity: " << bank.getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank.giveLoan(account1, 2147483647); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
     cout << "account1 - ID: " << account1 << ", Value: " << bank.getAccountValue(account1) << ", Loan: " << bank.getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank.getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
+void test5(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 5] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to pay off loan." << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->payOffLoan(account1, 50); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
+void test6(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 6] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to pay more than what I have in the bank." << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->payOffLoan(account1, 50); // HERE
+    cout << YELLOW << BOLD <<  "- After -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
+void test7(Bank *bank) {
+    cout << RED << BOLD << "--- [Test 7] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to give a loan to an account that does not exist" << RESET << endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    try {
+        bank->giveLoan(123, 10000); // HERE
+    } catch (std::runtime_error& e) {
+        cout << e.what() << endl;
+    }
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
+void test8(Bank *bank,int account1) {
+
+    cout << RED << BOLD << "--- [Test 8] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying to delete & re-create account." << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << ", Loan: " << bank->getAccountLoan(account1) << endl;
+    cout << "Bank - Liquidity: " << bank->getBankLiquidity() << std::endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    bank->deleteAccount(account1);
+    int recreate = bank->createAccount();
+    cout << "New Account ID: " << recreate << endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
 
 
+int main() {
+    Bank *bank = new Bank(1000);
 
+    int account1 = bank->createAccount();
+
+    test1(bank, account1);
+    test2(bank, account1);
+    test3(bank, account1);
+    test4();
+    test5(bank, account1);
+    test6(bank, account1);
+    test7(bank);
+    test8(bank, account1);
+
+    delete bank;
     cout << "--- END ---" << endl;
 }

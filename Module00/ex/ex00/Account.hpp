@@ -19,12 +19,11 @@ class Account {
         ~Account();
 
         // void changeValue(int amountToChange);
-        bool addLoan(int amountToAdd);
-        // void payOffLoan(int amountToPayOff);
+        void addLoan(int loanGiven, int amountMoney);
+        void payOffLoan(int amountToPayOff);
         int id;
         int value;
         int loan;
-
 };
 
 #endif

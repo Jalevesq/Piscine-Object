@@ -2,8 +2,6 @@
 
 Bank::Bank() {
     std::cout << "Bank constructor called" << std::endl;
-    if (liquidity < 0)
-        throw std::invalid_argument("Liquidity of Bank cannot be negative");
     this->liquidity = 0;
     this->nextID = 0;
 }
@@ -74,9 +72,51 @@ const int& Bank::getAccountLoan(int accountID) const {
 
 void Bank::giveLoan(int accountID, int amountToLoan) {
     Account& account = this->getAccount(accountID);
+    int accountMoney = account.getMyValue();
+    int accountLoan = account.getMyLoan();
+    try {
+        if (amountToLoan < 0)
+            throw std::runtime_error("Loan has to be a positive number");
+        if (this->liquidity < amountToLoan)
+            throw std::runtime_error("The bank has not enough money to loan");
+        if (accountLoan + amountToLoan >= std::numeric_limits<int>::max())
+            throw std::runtime_error("Loan addition exceeds maximum account loan limit.");
+        if (accountMoney + amountToLoan >= std::numeric_limits<int>::max())
+            throw std::runtime_error("Addition exceeds maximum account value limit.");
+    } catch(std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        return ;
+    }
+
+    int bankPercentage = (amountToLoan * 5) / 100;
+    int realLoan = amountToLoan - bankPercentage;
+    std::cout << "Loan: " << std::to_string(amountToLoan) << ", Bank percentage: " << std::to_string(bankPercentage) << ", Real loan: " << std::to_string(realLoan) << std::endl;
+    account.addLoan(amountToLoan, realLoan);
+    this->liquidity += bankPercentage;
+    this->liquidity -= amountToLoan;
+
+}
+
+void Bank::payOffLoan(int accountID, int amountToPayOff) {
+    Account& account = this->getAccount(accountID);
+    int accountMoney = account.getMyValue();
+    int accountLoan = account.getMyLoan();
+    try {
+        if (amountToPayOff <= 0)
+            throw std::runtime_error("The amount to pay off needs to be positive.");
+        if (amountToPayOff > accountLoan)
+            throw std::runtime_error("You cannot pay more than you owe to the bank.");
+        if (accountMoney < amountToPayOff)
+            throw std::runtime_error("You don't have enough money in your account to pay this much.");
+        if (this->liquidity + amountToPayOff >= std::numeric_limits<int>::max())
+            throw std::runtime_error("STOP, BANK AS TOO MUCH MONEY - HELP");
+    } catch (std::runtime_error& e) {
+        std::cout << e.what() << std::endl;
+        return;
+    }
 
 
-    // enlever le 5% et me le mettre
-    // - Vérifier que la banque a assez pour donner amountToLoan
-    // - Vérifier que: 1. le account
+    this->liquidity += amountToPayOff;
+    account.payOffLoan(amountToPayOff);
+    std::cout << "pay offf: " << std::to_string(amountToPayOff) << std::endl;
 }

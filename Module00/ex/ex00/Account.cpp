@@ -1,10 +1,10 @@
 #include "Account.hpp"
 
 Account::Account(int accountID, int value) {
-    std::cout << "Account constructor called" << std::endl;
     this->id = accountID;
     this->value = value;
     this->loan = 0;
+    std::cout << "Account constructor called: " << this->id << std::endl;
 }
 
 Account::~Account() {
@@ -23,12 +23,12 @@ const int& Account::getMyValue() const {
     return (this->value);
 }
 
+void Account::addLoan(int loanGiven, int amountMoney) {
+    this->value += amountMoney;
+    this->loan += loanGiven;
+}
 
-bool Account::addLoan(int amountToAdd) {
-    if (amountToAdd + this->loan >= std::numeric_limits<int>::max()) {
-        std::cout << "Loan addition exceeds maximum account loan limit. Nothing has been loaned." << std::endl;
-        return false;
-    }
-
-    return true;
+void Account::payOffLoan(int amountToPayOff) {
+    this->value -= amountToPayOff;
+    this->loan -= amountToPayOff;
 }
