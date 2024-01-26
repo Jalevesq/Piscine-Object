@@ -5,15 +5,14 @@
 
 class Graph {
     public:
-        Graph();
-        ~Graph();
+        Graph(Vector2 points);
 
-        // displayListVector() // display all the points in listVector
-        // displayOneVector(float x, float y, bool allList) // display one time x and y without adding it. bool for displaying all the graph with it or nah?
-        // addVector(Vector2 points);
+        void displayListVector(); // display all the points in listVector
+        // displayOneVector(Vector2, bool allList) // display one time x and y without adding it. bool for displaying all the graph with it or nah?
+        void    addVector(Vector2 points);
     private:
         Vector2 sizeGraph;
-        Vector2 listVector;
+        Vector2 listPoints;
 };
 
 #endif

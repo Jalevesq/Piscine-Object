@@ -1,14 +1,23 @@
 #ifndef VECTOR2_HPP
 #define VECTOR2_HPP
 
-// Supposé en faire un container avec des itérateurs ?
+#include <iostream>
+#include <vector>
+#include <utility> // for std::pair
+
 class Vector2 {
     public:
-        Vector2();
-        ~Vector2();
-    private:
-        float x;
-        float y;
-};
+        void addPoint(float x, float y);
 
+        std::vector<std::pair<float, float> >::iterator begin() {
+            return points.begin();
+        }
+
+        std::vector<std::pair<float, float> >::iterator end() {
+            return points.end();
+        }
+
+    private:
+        std::vector<std::pair<float, float> > points;
+};
 #endif

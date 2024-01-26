@@ -13,7 +13,7 @@ CXX := c++
 PATH_PREFIX := ex01/
 OBJS_PREFIX := ex01/objs/
 
-SRC_FILES := Account.cpp Bank.cpp main.cpp
+SRC_FILES := main.cpp Graph.cpp Vector2.cpp
 SRCS := $(addprefix $(PATH_PREFIX),$(SRC_FILES))
 
 OBJS := $(SRCS:$(PATH_PREFIX)%.cpp=$(OBJS_PREFIX)%.o)
