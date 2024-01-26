@@ -8,33 +8,24 @@ WHITE := \033[0;37m
 RESET := \033[0m
 BOLD := \033[1m
 
-# Project Name
-NAME := BankAccount
+NAME := Bank
 
-# Compiler
 CXX := c++
 
-# Path Prefix
 PATH_PREFIX := ex00/
 OBJS_PREFIX := ex00/objs/
 
-# Source files with prefix
 SRC_FILES := Account.cpp Bank.cpp main.cpp
 SRCS := $(addprefix $(PATH_PREFIX),$(SRC_FILES))
 
-# Object files with prefix
 OBJS := $(SRCS:$(PATH_PREFIX)%.cpp=$(OBJS_PREFIX)%.o)
 
-# Compilation flags
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-# Total number of source files
 TOTAL_FILES := $(words $(SRC_FILES))
 
-# Counter to keep track of the number of compiled files
 COMPILED_COUNT := 0
 
-# Function to update and print the compile progress
 define update_compile_progress
 $(eval COMPILED_COUNT=$(shell echo $$(($(COMPILED_COUNT)+1))))
 @printf "\033[KCompiling... [$(COMPILED_COUNT)/$(TOTAL_FILES)] - $(1)\r"

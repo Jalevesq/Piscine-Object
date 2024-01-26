@@ -1,35 +1,64 @@
-# Project Name
-NAME := ex00
+RED := \033[0;31m
+GREEN := \033[0;32m
+YELLOW := \033[0;33m
+BLUE := \033[0;34m
+MAGENTA := \033[0;35m
+CYAN := \033[0;36m
+WHITE := \033[0;37m
+RESET := \033[0m
+BOLD := \033[1m
 
-# Compiler
+NAME := test
 CXX := c++
+PATH_PREFIX := ex01/
+OBJS_PREFIX := ex01/objs/
 
-# Source files
-SRCS := Account.cpp \
-	Bank.cpp \
-	main.cpp
+SRC_FILES := Account.cpp Bank.cpp main.cpp
+SRCS := $(addprefix $(PATH_PREFIX),$(SRC_FILES))
 
-# Object files
-OBJS := $(SRCS:.cpp=.o)
+OBJS := $(SRCS:$(PATH_PREFIX)%.cpp=$(OBJS_PREFIX)%.o)
 
-# Compilation flags
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-all: $(NAME)
+TOTAL_FILES := $(words $(SRC_FILES))
+
+COMPILED_COUNT := 0
+
+define update_compile_progress
+$(eval COMPILED_COUNT=$(shell echo $$(($(COMPILED_COUNT)+1))))
+@printf "\033[KCompiling... [$(COMPILED_COUNT)/$(TOTAL_FILES)] - $(1)\r"
+endef
+
+all: $(OBJS_PREFIX) $(NAME)
+	@if [ $(COMPILED_COUNT) -gt 0 ]; then \
+		printf "\033[K"; \
+		echo "$(GREEN)$(BOLD)Compilation finished [$(TOTAL_FILES)/$(TOTAL_FILES)]$(RESET)"; \
+	fi
 
 $(NAME): $(OBJS)
-	$(CXX) $(OBJS) -o $(NAME)
+	@$(CXX) $(OBJS) -o $(NAME)
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJS_PREFIX):
+	@mkdir -p $(OBJS_PREFIX)
+
+$(OBJS_PREFIX)%.o: $(PATH_PREFIX)%.cpp
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(call update_compile_progress, $<)
 
 clean:
-	rm -f $(OBJS)
+	@printf "$(YELLOW)Cleaning up object files...$(RESET)"
+	@rm -rf $(OBJS_PREFIX)
+	@printf "\r\033[K$(GREEN)Done cleaning up object files$(RESET)\n"
+
 
 fclean: clean
-	rm -f $(NAME)
+	@printf "$(RED)Removing executable $(NAME)...$(RESET)"
+	@rm -f $(NAME)
+	@printf "\r\033[K$(GREEN)Done removing executable $(NAME)$(RESET)\n"
 
-re: fclean all
+re:
+	@echo "$(MAGENTA)Recompiling $(NAME)...$(RESET)"
+	@$(MAKE) fclean
+	@$(MAKE) all
 
-# Phony targets are ones that do not create a file named after the target name.
 .PHONY: all clean fclean re
