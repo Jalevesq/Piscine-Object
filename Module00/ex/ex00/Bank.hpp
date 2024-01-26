@@ -27,6 +27,8 @@ class Bank {
 
         void giveLoan(int accountID, int amountToLoan);
         void payOffLoan(int accountID, int amountToPayOff);
+
+        const Account& operator[](int index) const;
     private:
         std::map<int, Account*> clientAccount;
         std::set<int> availableIDs;

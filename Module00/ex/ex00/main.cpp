@@ -188,6 +188,30 @@ void test11(Bank *bank, int account1) {
     cout << RED << BOLD << "----------" << RESET << endl;
 }
 
+void test12(Bank *bank, int account1) {
+    cout << RED << BOLD << "--- [Test 12] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying operator overload on bank" << RESET << endl;
+    cout << YELLOW << BOLD << "- Before -" << RESET << endl;
+    cout << "account1 - ID: " << account1 << ", Value: " << bank->getAccountValue(account1) << endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    const Account& account = (*bank)[0];
+    cout << YELLOW << BOLD <<  "- Account -" << RESET << endl;
+    cout << "account - ID: " << account.getMyID() << ", Value: " << bank->getAccountValue(account.getMyID() ) << endl;
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
+
+void test13(Bank *bank) {
+    cout << RED << BOLD << "--- [Test 13] ---" << RESET << endl;
+    cout << GREEN << BOLD << "Trying operator overload out of bound" << RESET << endl;
+    cout << YELLOW << BOLD << "- Action -" << RESET << endl;
+    try {
+        const Account& account = (*bank)[-1];
+        cout << "account - ID: " << account.getMyID() << ", Value: " << bank->getAccountValue(account.getMyID() ) << endl;
+    } catch (std::runtime_error& e) {
+        std::cout << e.what() << endl;
+    }
+    cout << RED << BOLD << "----------" << RESET << endl;
+}
 
 
 int main() {
@@ -206,6 +230,8 @@ int main() {
     test9(bank, account1);
     test10(bank, account1);
     test11(bank, account1);
+    test12(bank, account1);
+    test13(bank);
     delete bank;
     cout << "--- END ---" << endl;
 }

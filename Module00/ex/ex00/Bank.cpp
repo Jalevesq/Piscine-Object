@@ -186,3 +186,11 @@ void Bank::addMoneyAccountOutside(int accountID, int amountToAdd) {
     account.addMoney(realAdd);
     this->liquidity += bankPercentage;
 }
+
+const Account& Bank::operator[](int accountID) const {
+    std::cout << "Getting account with ID " << accountID << std::endl;
+    std::map<int, Account*>::const_iterator it = this->clientAccount.find(accountID);
+    if (it != this->clientAccount.end())
+        return (*it->second);
+    throw std::runtime_error("Out of bound");
+}
