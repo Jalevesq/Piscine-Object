@@ -8,7 +8,7 @@ WHITE := \033[0;37m
 RESET := \033[0m
 BOLD := \033[1m
 
-NAME := test
+NAME := Graph
 CXX := c++
 PATH_PREFIX := ex01/
 OBJS_PREFIX := ex01/objs/
