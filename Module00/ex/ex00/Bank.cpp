@@ -16,9 +16,13 @@ Bank::Bank(int liquidity) {
 
 Bank::~Bank() {
     std::cout << "Bank destructor called" << std::endl;
-    for (std::map<int, Account*>::iterator it = this->clientAccount.begin(); it != this->clientAccount.end(); it++)
-        if ((*it).second)
-            delete (*it).second;
+    for (std::map<int, Account*>::iterator it = clientAccount.begin(); it != clientAccount.end(); ) {
+        if (it->second) {
+            delete it->second;
+            it->second = nullptr;
+        }
+        clientAccount.erase(it++);
+    }
 }
 
 int Bank::generateID() {
@@ -42,7 +46,10 @@ int Bank::createAccount() {
 void Bank::deleteAccount(int accountID) {
     std::map<int, Account*>::iterator it = this->clientAccount.find(accountID);
     if (it != this->clientAccount.end()) {
-        delete it->second;
+        if (it->second) {
+            delete it->second;
+            it->second = NULL;
+        }
         this->clientAccount.erase(it);
         this->availableIDs.insert(it->first);
         std::cout << "Client account " << it->first << " Deleted." << std::endl;
