@@ -5,6 +5,8 @@
 #include <map>
 #include "Shovel.hpp"
 
+class Shovel;
+
 struct Position {
     int x;
     int y;
@@ -22,12 +24,15 @@ class Worker {
         Worker();
         void giveNewShovel(Shovel *newShovel);
         void dropShovel();
-
+        void useShovel();
     private:
         Position _coordonnee;
         Statistic _stat;
         Shovel *_shovel;
-        static std::map<Shovel*, Worker*> shovelRegistry;
+        static std::map<Shovel*, Worker*> _shovelRegistry;
+
+        Worker* searchShovelOwner(Shovel* newShovel);
+        void setupNewShovel(Shovel* newShovel);
 };
 
 
