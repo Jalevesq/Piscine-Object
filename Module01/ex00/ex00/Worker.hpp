@@ -2,6 +2,7 @@
 #define WORKER_HPP
 
 #include <iostream>
+#include <map>
 #include "Shovel.hpp"
 
 struct Position {
@@ -26,6 +27,7 @@ class Worker {
         Position _coordonnee;
         Statistic _stat;
         Shovel *_shovel;
+        static std::map<Shovel*, Worker*> shovelRegistry;
 };
 
 

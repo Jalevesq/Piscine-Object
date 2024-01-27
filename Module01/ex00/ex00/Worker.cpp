@@ -13,10 +13,7 @@ Worker::Worker() {
 }
 
 void Worker::giveNewShovel(Shovel *newShovel) {
-    if (this->_shovel) {
-        this->_shovel->removeFromWorker();
-        this->_shovel = newShovel;
-    }
+    
 }
 
 void Worker::dropShovel() {
