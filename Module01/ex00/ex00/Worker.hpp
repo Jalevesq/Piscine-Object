@@ -22,6 +22,7 @@ struct Statistic {
 class Worker {
     public:
         Worker();
+        ~Worker();
         void giveNewShovel(Shovel *newShovel);
         void dropShovel();
         void useShovel();
@@ -31,6 +32,7 @@ class Worker {
         Shovel *_shovel;
         static std::map<Shovel*, Worker*> _shovelRegistry;
 
+        bool checkShovel(Shovel* newShovel);
         Worker* searchShovelOwner(Shovel* newShovel);
         void setupNewShovel(Shovel* newShovel);
 };
