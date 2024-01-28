@@ -26,7 +26,7 @@ void Tool::Detach(IObserver *observer) {
 
 void  Tool::Notify() {
     std::list<IObserver *>::iterator iterator = this->_list_observer.begin();
-    // HowManyObserver();
+    HowManyObserver();
     while (iterator != this->_list_observer.end()) {
         (*iterator)->Update(this->getToolName());
         iterator = this->_list_observer.begin();
