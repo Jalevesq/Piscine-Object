@@ -20,7 +20,7 @@ const std::string RESET = "\033[0m";     // Reset to default
 void test1(Worker* worker) {
     std::cout << RED << "TEST 1" <<  RESET << std::endl;
     std::cout << RED << "Trying to use Tool without having one." << RESET << std::endl;
-    worker->useTool();
+    worker->useTool(SHOVEL);
     std::cout << RED << "END OF TEST 1" << std::endl;
 }
 
@@ -28,7 +28,7 @@ void test2(Worker* worker) {
     std::cout << GREEN << "TEST 2" << RESET << std::endl;
     std::cout << GREEN << "Giving NULL to giveNewTool and trying to use it" << RESET << std::endl;
     worker->giveNewTool(NULL);
-    worker->useTool();
+    worker->useTool(SHOVEL);
     std::cout << GREEN << "END OF TEST 2" << std::endl;
 }
 
@@ -36,7 +36,7 @@ void test3(Worker* worker, Tool *tool) {
     std::cout << YELLOW << "TEST 3" << RESET << std::endl;
     std::cout << YELLOW << "Trying to give a new Tool and use it" << RESET << std::endl;
     worker->giveNewTool(tool);
-    worker->useTool();
+    worker->useTool(tool->getToolName());
     std::cout << YELLOW << "END OF TEST 3" << std::endl;
 }
 
@@ -44,7 +44,7 @@ void test4(Worker* worker, Tool *tool) {
     std::cout << BLUE << "TEST 4" << RESET << std::endl;
     std::cout << BLUE << "Trying to give the Tool that he already has" << RESET << std::endl;
     worker->giveNewTool(tool);
-    worker->useTool();
+    worker->useTool(tool->getToolName());
     std::cout << BLUE << "END OF TEST 4" << RESET << std::endl;
 }
 
@@ -52,8 +52,8 @@ void test5(Worker* worker, Worker * worker2, Tool* tool) {
     std::cout << MAGENTA << "TEST 5" << RESET << std::endl;
     std::cout << MAGENTA << "Giving the Tool of worker to worker2 and using it." << RESET << std::endl;
     worker2->giveNewTool(tool);
-    worker2->useTool();
-    worker->useTool();
+    worker2->useTool(tool->getToolName());
+    worker->useTool(tool->getToolName());
     std::cout << MAGENTA << "END OF TEST 5" << RESET << std::endl;
 }
 
@@ -61,52 +61,47 @@ void test6(Worker* worker, Worker * worker2) {
     std::cout << CYAN << "TEST 6" << RESET << std::endl;
 
     std::cout << CYAN << "Removing the Tool from worker2 and trying to use it" << RESET << std::endl;
-    worker2->dropTool();
-    worker2->useTool();
-    worker->useTool();
+    worker2->dropTool(SHOVEL);
+    worker2->useTool(SHOVEL);
+    worker->useTool(SHOVEL);
 
     std::cout << CYAN << "END OF TEST 6" << RESET << std::endl;
 }
 
 void test7(Worker* worker, Worker * worker2, Tool* tool, Tool* tool2) {
     std::cout << RED << "TEST 7" << RESET << std::endl;
-    std::cout << RED << "2 Tools + 2 workers, multiple test" << RESET << std::endl;
+    std::cout << RED << "2 worker taking shovel, use it and drop it." << RESET << std::endl;
 
     worker->giveNewTool(tool);
     worker2->giveNewTool(tool2);
-    worker->useTool();
-    worker2->useTool();
+    worker->useTool(SHOVEL);
+    worker2->useTool(SHOVEL);
 
-    worker->dropTool();
-    worker->dropTool();
+    worker->dropTool(SHOVEL);
+    worker2->dropTool(SHOVEL);
 
-    worker->useTool();
-    worker2->useTool();
-
-    worker2->dropTool();
-
-    worker->useTool();
-    worker2->useTool();
+    worker->useTool(SHOVEL);
+    worker2->useTool(SHOVEL);
 
     std::cout << RED << "END OF TEST 7" << RESET << std::endl;
 }
 
 void test8() {
-    std::cout << GREEN << "TEST 8" << RESET << std::endl;
-    std::cout << GREEN << "Giving new Worker a Tool, delete the Tool and give him a new one." << RESET << std::endl;
-
     Worker* workerA = new Worker;
     Tool* toolA = new Shovel;
     Tool* toolB = new Shovel;
 
+    std::cout << GREEN << "TEST 8" << RESET << std::endl;
+    std::cout << GREEN << "Giving new Worker a Tool, delete the Tool and give him a new one." << RESET << std::endl;
+
     workerA->giveNewTool(toolA);
-    workerA->useTool();
+    workerA->useTool(SHOVEL);
 
     delete toolA;
-    workerA->useTool();
+    workerA->useTool(SHOVEL);
 
     workerA->giveNewTool(toolB);
-    workerA->useTool();
+    workerA->useTool(SHOVEL);
 
 
     delete toolB;
@@ -114,22 +109,22 @@ void test8() {
 }
 
 void test9() {
-    std::cout << YELLOW << "TEST 9" << RESET << std::endl;
-    std::cout << YELLOW << "Giving new Worker a Tool, delete the Worker and give the tool to another worker." << RESET << std::endl;
-
     Worker* workerA = new Worker;
     Worker* workerB = new Worker;
     Tool* toolA = new Shovel;
 
+    std::cout << YELLOW << "TEST 9" << RESET << std::endl;
+    std::cout << YELLOW << "Giving new Worker a Tool, delete the Worker and give the tool to another worker." << RESET << std::endl;
+
     workerA->giveNewTool(toolA);
-    workerA->useTool();
+    workerA->useTool(SHOVEL);
 
     delete workerA;
-    workerB->useTool();
+    workerB->useTool(SHOVEL);
     workerB->giveNewTool(toolA);
-    workerB->useTool();
+    workerB->useTool(SHOVEL);
 
-    workerB->dropTool();
+    workerB->dropTool(SHOVEL);
     std::cout << YELLOW << "END OF TEST 9" << RESET << std::endl;
 
     delete workerB;
@@ -137,32 +132,66 @@ void test9() {
 }
 
 void test10() {
-    std::cout << BLUE << "TEST 10" << RESET << std::endl;
-    std::cout << BLUE << "Test with Hammer and Shovel. Interchanging & deleting them." << RESET << std::endl;
-
     Tool* shovel = new Shovel;
     Tool* hammer = new Hammer;
     Worker* worker = new Worker;
 
+    std::cout << BLUE << "TEST 10" << RESET << std::endl;
+    std::cout << BLUE << "Test with Hammer and Shovel. Interchanging & deleting them." << RESET << std::endl;
+
     worker->giveNewTool(shovel);
-    worker->useTool();
-    worker->useTool();
+    worker->useTool(SHOVEL);
+    worker->useTool(SHOVEL);
     worker->giveNewTool(hammer);
-    worker->dropTool();
+    worker->dropTool(HAMMER);
     worker->giveNewTool(shovel);
-    worker->useTool();
-    worker->dropTool();
+    worker->useTool(SHOVEL);
+    worker->dropTool(SHOVEL);
     worker->giveNewTool(hammer);
-    worker->useTool();
+    worker->useTool(HAMMER);
     worker->giveNewTool(shovel);
     delete shovel;
-    worker->useTool();
+    worker->useTool(SHOVEL);
     worker->giveNewTool(hammer);
-    worker->useTool();
+    worker->useTool(HAMMER);
     delete hammer;
-    worker->useTool();    
+    worker->useTool(HAMMER);    
 
     std::cout << BLUE << "END OF TEST 10" << RESET << std::endl;
+}
+
+void test11() {
+
+    Tool* shovel = new Shovel;
+    Tool* hammer = new Hammer;
+    Worker* worker = new Worker;
+    std::cout << MAGENTA << "TEST 11" << RESET << std::endl;
+    std::cout << MAGENTA << "Test one worker with multiple tools." << RESET << std::endl;
+
+    worker->giveNewTool(shovel);
+    worker->giveNewTool(hammer);
+
+    worker->useTool(HAMMER);
+    worker->useTool(SHOVEL);
+    worker->useTool(SHOVEL);
+    worker->useTool(SHOVEL);
+    worker->useTool(HAMMER);
+
+    worker->dropTool(SHOVEL);
+    worker->useTool(SHOVEL);
+    worker->useTool(HAMMER);
+
+    worker->dropTool(HAMMER);
+
+    worker->useTool(SHOVEL);
+    worker->useTool(HAMMER);
+
+    std::cout << MAGENTA << "END OF TEST 11" << RESET << std::endl;
+    delete shovel;
+    delete hammer;
+    delete worker;
+
+
 }
 
 int main(void) {
@@ -181,7 +210,7 @@ int main(void) {
     test8();
     test9();
     test10();
-
+    test11();
 
 
     delete tool;

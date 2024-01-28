@@ -3,60 +3,66 @@
 
 Worker::~Worker() {
     std::cout << "Destructor of Worker called" << std::endl;
-    this->dropTool();
+    this->dropTool(HAMMER);
+    this->dropTool(SHOVEL);
 }
 
-Worker::Worker() {
+Worker::Worker() : _toolBox() {
     this->_coordonnee.x = 0;
     this->_coordonnee.y = 0;
     this->_coordonnee.z = 0;
 
     this->_stat.exp = 0;
     this->_stat.level = 0;
-    this->_tool = NULL;
     std::cout << "Worker constructor Called!" << std::endl;
 }
 
 void Worker::giveNewTool(Tool *newTool) {
     std::cout << "Trying to give a new Tool to Worker !" << std::endl;
-    if (!this->checkTool(newTool))
+    std::string newToolName = this->checkTool(newTool);
+    if (newToolName.empty())
         return;
-    if (this->_tool)
-        this->_tool->Detach(this);
     newTool->Attach(this);
-    this->_tool = newTool;
-    std::cout << newTool->getToolName() << " taken !" << std::endl;
+    this->_toolBox[newToolName] = newTool;
+    std::cout << newToolName << " taken !" << std::endl;
 }
 
-bool Worker::checkTool(Tool* newTool) {
+std::string Worker::checkTool(Tool* newTool) {
     if (!newTool) {
         std::cout << "Fake Tool given, nothing has been done." << std::endl;
-        return false;
+        return "";
     }
-    if (newTool == this->_tool) {
+    std::string newToolName = newTool->getToolName();
+    std::map<std::string, Tool *>::iterator it = this->_toolBox.find(newToolName);
+    if (it != this->_toolBox.end()) {
         std::cout << "Worker already has this Tool." << std::endl;
-        return false;
+        return "";
     }
-    return true;
+    return newToolName;
 }
 
 
-void Worker::useTool() {
-    if (!this->_tool) {
-        std::cout << "The worker has no Tool." << std::endl;
+void Worker::useTool(std::string toolName) {
+    std::map<std::string, Tool *>::iterator it = this->_toolBox.find(toolName);
+    if (it == this->_toolBox.end()) {
+        std::cout << "This worker can't use a " << toolName << " because he doesn't have it in his tool box." << std::endl;
     } else {
-        this->_tool->use();
+        it->second->use();
     }
 }
 
-void Worker::dropTool() {
-    if (this->_tool) {
-        std::cout << "A worker is droping a " << this->_tool->getToolName() << std::endl;
-        this->_tool->Detach(this);
-        this->_tool = NULL;
+void Worker::dropTool(std::string toolName) {
+    std::map<std::string, Tool *>::iterator it = this->_toolBox.find(toolName);
+    std::cout << "Trying to drop a tool" << std::endl;
+    if (it != this->_toolBox.end()) {
+        std::cout << "A worker is dropping a " << toolName << "." << std::endl;
+        it->second->Detach(this);
+        this->_toolBox.erase(it);
+    } else {
+        std::cout << "This worker can't drop a " << toolName << " because he doesn't have it in his tool box." << std::endl;
     }
 }
 
-void Worker::Update() {
-    this->dropTool();
+void Worker::Update(std::string toolName) {
+    this->dropTool(toolName);
 }

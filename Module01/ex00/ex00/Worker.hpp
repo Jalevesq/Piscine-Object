@@ -1,10 +1,12 @@
 #ifndef WORKER_HPP
-#define WORKER_HPP
+# define WORKER_HPP
 
-#include <iostream>
-#include "Tool.hpp"
+# include <iostream>
+# include "Tool.hpp"
+# include <map>
 
-class Shovel;
+# define HAMMER "Hammer"
+# define SHOVEL "Shovel"
 
 struct Position {
     int x;
@@ -22,17 +24,17 @@ class Worker : public IObserver {
         Worker();
         ~Worker();
         void giveNewTool(Tool *newShovel);
-        void dropTool();
-        void useTool();
+        void dropTool(std::string toolName);
+        void useTool(std::string toolName);
 
-        void Update();
+        void Update(std::string toolName);
     private:
         Position _coordonnee;
         Statistic _stat;
-        Tool *_tool;
+        std::map<std::string, Tool *> _toolBox;
 
 
-        bool checkTool(Tool* newShovel);
+        std::string checkTool(Tool* newShovel);
 };
 
 
