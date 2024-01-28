@@ -1,6 +1,5 @@
 #include "Worker.hpp"
 
-std::map<Shovel*, Worker*> Worker::_shovelRegistry;
 
 Worker::~Worker() {
     std::cout << "Destructor of Worker called" << std::endl;
@@ -21,13 +20,10 @@ void Worker::giveNewShovel(Shovel *newShovel) {
     std::cout << "Trying to give a new Shovel to Worker !" << std::endl;
     if (!this->checkShovel(newShovel))
         return;
-
-    Worker* shovelOwner = this->searchShovelOwner(newShovel);
-    if (shovelOwner) {
-        std::cout << "The shovel is owned by someone else. Taking it from him!" << std::endl;
-        shovelOwner->dropShovel();
-    }
-    this->setupNewShovel(newShovel);
+    if (this->_shovel)
+        this->_shovel->Detach(this);
+    newShovel->Attach(this);
+    this->_shovel = newShovel;
 }
 
 bool Worker::checkShovel(Shovel* newShovel) {
@@ -42,19 +38,6 @@ bool Worker::checkShovel(Shovel* newShovel) {
     return true;
 }
 
-void Worker::setupNewShovel(Shovel *newShovel) {
-    this->dropShovel();
-    this->_shovel = newShovel;
-    this->_shovelRegistry[newShovel] = this;
-    std::cout << "New Shovel given !" << std::endl;
-}
-
-Worker* Worker::searchShovelOwner(Shovel *newShovel) {
-    std::map<Shovel*, Worker*>::iterator it = this->_shovelRegistry.find(newShovel);
-    if (it != this->_shovelRegistry.end())
-        return it->second;
-    return NULL;
-}
 
 void Worker::useShovel() {
     if (!this->_shovel) {
@@ -67,7 +50,7 @@ void Worker::useShovel() {
 void Worker::dropShovel() {
     if (this->_shovel) {
         std::cout << "A worker is droping a Shovel." << std::endl;
-        this->_shovelRegistry.erase(this->_shovel);
+        this->_shovel->Detach(this);
         this->_shovel = NULL;
     }
 }

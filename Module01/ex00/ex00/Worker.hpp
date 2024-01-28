@@ -2,8 +2,8 @@
 #define WORKER_HPP
 
 #include <iostream>
-#include <map>
 #include "Shovel.hpp"
+#include "IObserver.hpp"
 
 class Shovel;
 
@@ -18,23 +18,25 @@ struct Statistic {
     int exp;
 };
 
-
-class Worker {
+class Worker : public IObserver {
     public:
         Worker();
         ~Worker();
         void giveNewShovel(Shovel *newShovel);
         void dropShovel();
         void useShovel();
+
+        void Update() {
+            this->dropShovel();
+        }
+
     private:
         Position _coordonnee;
         Statistic _stat;
         Shovel *_shovel;
-        static std::map<Shovel*, Worker*> _shovelRegistry;
+
 
         bool checkShovel(Shovel* newShovel);
-        Worker* searchShovelOwner(Shovel* newShovel);
-        void setupNewShovel(Shovel* newShovel);
 };
 
 

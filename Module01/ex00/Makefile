@@ -18,7 +18,7 @@ SRCS := $(addprefix $(PATH_PREFIX),$(SRC_FILES))
 
 OBJS := $(SRCS:$(PATH_PREFIX)%.cpp=$(OBJS_PREFIX)%.o)
 
-CXXFLAGS := -Wall -Wextra -Werror -std=c++98
+CXXFLAGS := -g -Wall -Wextra -Werror -std=c++98 
 
 TOTAL_FILES := $(words $(SRC_FILES))
 
