@@ -25,6 +25,7 @@ void Worker::giveNewTool(Tool *newTool) {
         this->_tool->Detach(this);
     newTool->Attach(this);
     this->_tool = newTool;
+    std::cout << "New tool taken !" << std::endl;
 }
 
 bool Worker::checkTool(Tool* newTool) {
