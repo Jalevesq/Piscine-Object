@@ -3,6 +3,7 @@
 
 Worker::~Worker() {
     std::cout << "Destructor of Worker called" << std::endl;
+    this->dropShovel();
 }
 
 Worker::Worker() {

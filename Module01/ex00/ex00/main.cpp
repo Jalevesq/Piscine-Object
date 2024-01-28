@@ -65,6 +65,11 @@ int main(void) {
     worker3->dropShovel();
     worker3->giveNewShovel(shovel5);
     worker3->useShovel();
+    delete worker3;
+    worker2->giveNewShovel(shovel5);
+    worker2->useShovel();
+
+
 
     delete shovel;
     delete shovel2;
