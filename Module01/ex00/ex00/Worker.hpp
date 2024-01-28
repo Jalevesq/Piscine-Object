@@ -2,8 +2,7 @@
 #define WORKER_HPP
 
 #include <iostream>
-#include "Shovel.hpp"
-#include "IObserver.hpp"
+#include "Tool.hpp"
 
 class Shovel;
 
@@ -22,21 +21,18 @@ class Worker : public IObserver {
     public:
         Worker();
         ~Worker();
-        void giveNewShovel(Shovel *newShovel);
-        void dropShovel();
-        void useShovel();
+        void giveNewTool(Tool *newShovel);
+        void dropTool();
+        void useTool();
 
-        void Update() {
-            this->dropShovel();
-        }
-
+        void Update();
     private:
         Position _coordonnee;
         Statistic _stat;
-        Shovel *_shovel;
+        Tool *_tool;
 
 
-        bool checkShovel(Shovel* newShovel);
+        bool checkTool(Tool* newShovel);
 };
 
 

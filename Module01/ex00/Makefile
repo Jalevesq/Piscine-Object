@@ -8,12 +8,12 @@ WHITE := \033[0;37m
 RESET := \033[0m
 BOLD := \033[1m
 
-NAME := gpu
+NAME := worker
 CXX := c++
 PATH_PREFIX := ex00/
 OBJS_PREFIX := ex00/objs/
 
-SRC_FILES := main.cpp Shovel.cpp Worker.cpp
+SRC_FILES := main.cpp Shovel.cpp Worker.cpp Tool.cpp
 SRCS := $(addprefix $(PATH_PREFIX),$(SRC_FILES))
 
 OBJS := $(SRCS:$(PATH_PREFIX)%.cpp=$(OBJS_PREFIX)%.o)

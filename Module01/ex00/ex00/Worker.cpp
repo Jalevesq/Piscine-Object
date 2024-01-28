@@ -3,7 +3,7 @@
 
 Worker::~Worker() {
     std::cout << "Destructor of Worker called" << std::endl;
-    this->dropShovel();
+    this->dropTool();
 }
 
 Worker::Worker() {
@@ -13,45 +13,49 @@ Worker::Worker() {
 
     this->_stat.exp = 0;
     this->_stat.level = 0;
-    this->_shovel = NULL;
-    std::cout << "New worker incoming!" << std::endl;
+    this->_tool = NULL;
+    std::cout << "Worker constructor Called!" << std::endl;
 }
 
-void Worker::giveNewShovel(Shovel *newShovel) {
-    std::cout << "Trying to give a new Shovel to Worker !" << std::endl;
-    if (!this->checkShovel(newShovel))
+void Worker::giveNewTool(Tool *newTool) {
+    std::cout << "Trying to give a new Tool to Worker !" << std::endl;
+    if (!this->checkTool(newTool))
         return;
-    if (this->_shovel)
-        this->_shovel->Detach(this);
-    newShovel->Attach(this);
-    this->_shovel = newShovel;
+    if (this->_tool)
+        this->_tool->Detach(this);
+    newTool->Attach(this);
+    this->_tool = newTool;
 }
 
-bool Worker::checkShovel(Shovel* newShovel) {
-    if (!newShovel) {
-        std::cout << "Fake shovel given, nothing has been done." << std::endl;
+bool Worker::checkTool(Tool* newTool) {
+    if (!newTool) {
+        std::cout << "Fake Tool given, nothing has been done." << std::endl;
         return false;
     }
-    if (newShovel == this->_shovel) {
-        std::cout << "Worker already has this shovel." << std::endl;
+    if (newTool == this->_tool) {
+        std::cout << "Worker already has this Tool." << std::endl;
         return false;
     }
     return true;
 }
 
 
-void Worker::useShovel() {
-    if (!this->_shovel) {
-        std::cout << "The worker has no Shovel." << std::endl;
+void Worker::useTool() {
+    if (!this->_tool) {
+        std::cout << "The worker has no Tool." << std::endl;
     } else {
-        this->_shovel->use();
+        this->_tool->use();
     }
 }
 
-void Worker::dropShovel() {
-    if (this->_shovel) {
-        std::cout << "A worker is droping a Shovel." << std::endl;
-        this->_shovel->Detach(this);
-        this->_shovel = NULL;
+void Worker::dropTool() {
+    if (this->_tool) {
+        std::cout << "A worker is droping a Tool." << std::endl;
+        this->_tool->Detach(this);
+        this->_tool = NULL;
     }
+}
+
+void Worker::Update() {
+    this->dropTool();
 }
