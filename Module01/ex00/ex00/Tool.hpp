@@ -17,8 +17,12 @@ class Tool : public ISubject {
         void Detach(IObserver *observer);
         void Notify();
         void HowManyObserver();
+
+        void incrementToolUses();
+        const int& getNumberOfUses() const;
     private:
         std::string _toolName;
+        int _numberOfUses;
 
         std::list<IObserver *> _list_observer;
         IObserver* _currentWorker;

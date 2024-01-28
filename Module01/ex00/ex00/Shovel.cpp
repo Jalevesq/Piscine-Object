@@ -2,7 +2,6 @@
 
 Shovel::Shovel() : Tool("Shovel")  {
     std::cout << "Shovel constructor Called!" << std::endl;
-    this->_numberOfUses = 0;
 }
 
 Shovel::~Shovel() {
@@ -11,6 +10,6 @@ Shovel::~Shovel() {
 
 
 void Shovel::use() {
-    this->_numberOfUses++;
-    std::cout << "Shovel used. Total uses: " << this->_numberOfUses << std::endl;
+    this->incrementToolUses();
+    std::cout << "Shovel used. Total uses: " << this->getNumberOfUses() << std::endl;
 }

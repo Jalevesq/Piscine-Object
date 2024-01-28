@@ -10,9 +10,6 @@ class Shovel : public Tool {
         ~Shovel();
 
         void use();
-        private:
-            int _numberOfUses;
-
 };
 
 #endif

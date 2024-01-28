@@ -5,6 +5,8 @@ Tool::Tool(std::string toolName)  {
     std::cout << "Tool constructor Called!" << std::endl;
     this->_currentWorker = NULL;
     this->_toolName = toolName;
+    this->_numberOfUses = 0;
+
 }
 
 Tool::~Tool() {
@@ -36,4 +38,12 @@ void  Tool::HowManyObserver() {
 }
 const std::string& Tool::getToolName() const {
     return (this->_toolName);
+}
+
+void Tool::incrementToolUses() {
+    this->_numberOfUses++;
+}
+
+const int& Tool::getNumberOfUses() const {
+    return (this->_numberOfUses);
 }

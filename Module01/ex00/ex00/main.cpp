@@ -2,6 +2,7 @@
 #include "Tool.hpp"
 #include "Worker.hpp"
 #include "Shovel.hpp"
+#include "Hammer.hpp"
 #include <iostream>
 
 // ANSI Color Codes
@@ -135,6 +136,35 @@ void test9() {
     delete toolA;
 }
 
+void test10() {
+    std::cout << BLUE << "TEST 10" << RESET << std::endl;
+    std::cout << BLUE << "Test with Hammer and Shovel. Interchanging & deleting them." << RESET << std::endl;
+
+    Tool* shovel = new Shovel;
+    Tool* hammer = new Hammer;
+    Worker* worker = new Worker;
+
+    worker->giveNewTool(shovel);
+    worker->useTool();
+    worker->useTool();
+    worker->giveNewTool(hammer);
+    worker->dropTool();
+    worker->giveNewTool(shovel);
+    worker->useTool();
+    worker->dropTool();
+    worker->giveNewTool(hammer);
+    worker->useTool();
+    worker->giveNewTool(shovel);
+    delete shovel;
+    worker->useTool();
+    worker->giveNewTool(hammer);
+    worker->useTool();
+    delete hammer;
+    worker->useTool();    
+
+    std::cout << BLUE << "END OF TEST 10" << RESET << std::endl;
+}
+
 int main(void) {
     Tool* tool = new Shovel;
     Tool* tool2 = new Shovel;
@@ -150,6 +180,7 @@ int main(void) {
     test7(worker, worker2, tool, tool2);
     test8();
     test9();
+    test10();
 
 
 

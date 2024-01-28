@@ -25,7 +25,7 @@ void Worker::giveNewTool(Tool *newTool) {
         this->_tool->Detach(this);
     newTool->Attach(this);
     this->_tool = newTool;
-    std::cout << "New tool taken !" << std::endl;
+    std::cout << newTool->getToolName() << " taken !" << std::endl;
 }
 
 bool Worker::checkTool(Tool* newTool) {
@@ -51,7 +51,7 @@ void Worker::useTool() {
 
 void Worker::dropTool() {
     if (this->_tool) {
-        std::cout << "A worker is droping a Tool." << std::endl;
+        std::cout << "A worker is droping a " << this->_tool->getToolName() << std::endl;
         this->_tool->Detach(this);
         this->_tool = NULL;
     }
