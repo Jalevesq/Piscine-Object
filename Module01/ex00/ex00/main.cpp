@@ -190,8 +190,9 @@ void test11() {
     delete shovel;
     delete hammer;
     delete worker;
+}
 
-
+void test12() {
 }
 
 int main(void) {
@@ -211,6 +212,7 @@ int main(void) {
     test9();
     test10();
     test11();
+    test12();
 
 
     delete tool;

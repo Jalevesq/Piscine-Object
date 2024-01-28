@@ -3,8 +3,11 @@
 
 Worker::~Worker() {
     std::cout << "Destructor of Worker called" << std::endl;
-    this->dropTool(HAMMER);
-    this->dropTool(SHOVEL);
+    std::map<std::string, Tool *>::iterator it = this->_toolBox.begin();
+    while (it != this->_toolBox.end()) {
+        this->dropTool(it->first);
+        it = this->_toolBox.begin();
+    }
 }
 
 Worker::Worker() : _toolBox() {
