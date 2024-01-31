@@ -6,7 +6,7 @@
 class IObserver {
     public:
         virtual ~IObserver(){};
-        virtual void Update(std::string toolName) = 0;
+        virtual void Update(void* update, const std::string& typeID) = 0;
 };
 
 #endif

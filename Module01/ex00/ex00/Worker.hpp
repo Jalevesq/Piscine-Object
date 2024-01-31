@@ -3,7 +3,8 @@
 
 # include <iostream>
 # include "Tool.hpp"
-# include <map>
+# include "Workshop.hpp"
+# include <set>
 
 # define HAMMER "Hammer"
 # define SHOVEL "Shovel"
@@ -23,15 +24,16 @@ class Worker : public IObserver {
     public:
         Worker();
         ~Worker();
-        void giveNewTool(Tool *newShovel);
-        void dropTool(std::string toolName);
+        void giveNewTool(Tool *newTool);
+        void dropTool(Tool *tool);
         void useTool(std::string toolName);
-
-        void Update(std::string toolName);
+        // Create a method that return it's tool.
+        virtual void Update(void* update, const std::string& typeID);
+        // void Update(Workshop *workshop);
     private:
         Position _coordonnee;
         Statistic _stat;
-        std::map<std::string, Tool *> _toolBox;
+        std::set<Tool *> _toolBox;
 
 
         std::string checkTool(Tool* newShovel);

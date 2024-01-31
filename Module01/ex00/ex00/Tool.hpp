@@ -13,9 +13,9 @@ class Tool : public ISubject {
         const std::string& getToolName() const;
         virtual void use() = 0;
 
-        void Attach(IObserver *observer);
-        void Detach(IObserver *observer);
-        void Notify();
+        virtual void Attach(IObserver *observer);
+        virtual void Detach(IObserver *observer);
+        virtual void Notify();
         void HowManyObserver();
 
         void incrementToolUses();
@@ -25,7 +25,6 @@ class Tool : public ISubject {
         int _numberOfUses;
 
         std::list<IObserver *> _list_observer;
-        IObserver* _currentWorker;
 };
 
 #endif

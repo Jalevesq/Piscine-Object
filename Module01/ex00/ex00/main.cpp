@@ -4,6 +4,7 @@
 #include "Shovel.hpp"
 #include "Hammer.hpp"
 #include <iostream>
+#include <memory>
 
 // ANSI Color Codes
 const std::string RED = "\033[31m";      // Red color
