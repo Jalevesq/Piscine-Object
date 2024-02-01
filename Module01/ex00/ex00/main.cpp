@@ -251,7 +251,7 @@ void test13() {
     returnedHammer = workerA->returnTool(HAMMER);
     workerB->giveNewTool(returnedHammer);
 
-    workerB->useTool(HAMMER);z
+    workerB->useTool(HAMMER);
     workerA->useTool(HAMMER);
 
     delete workerB;
