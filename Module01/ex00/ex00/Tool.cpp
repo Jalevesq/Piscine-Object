@@ -10,11 +10,11 @@ Tool::Tool(std::string toolName)  {
 
 Tool::~Tool() {
     std::cout << "Tool destructor Called!" << std::endl;
-    this->Notify();
+    this->Notify("Tool");
 }
 
 void Tool::Attach(IObserver *observer) {
-    this->Notify();
+    this->Notify("Tool");
     this->_list_observer.push_back(observer);
 }
 
@@ -22,11 +22,11 @@ void Tool::Detach(IObserver *observer) {
     this->_list_observer.remove(observer);
 }
 
-void  Tool::Notify() {
+void  Tool::Notify(const std::string& notifyType) {
     std::list<IObserver *>::iterator iterator = this->_list_observer.begin();
     HowManyObserver();
     while (iterator != this->_list_observer.end()) {
-        (*iterator)->Update(this, "Tool");
+        (*iterator)->Update(this, notifyType);
         iterator = this->_list_observer.begin();
     }
 }

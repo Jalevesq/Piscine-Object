@@ -15,7 +15,7 @@ class Tool : public ISubject {
 
         virtual void Attach(IObserver *observer);
         virtual void Detach(IObserver *observer);
-        virtual void Notify();
+        virtual void Notify(const std::string& notifyType);
         void HowManyObserver();
 
         void incrementToolUses();

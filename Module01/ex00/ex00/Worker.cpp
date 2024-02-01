@@ -69,8 +69,14 @@ void Worker::Update(void* update, const std::string& typeID) {
     if (typeID == "Tool") {
         Tool *tool = static_cast<Tool*>(update);
        this->dropTool(tool->getToolName());
-    } else if (typeID == "Workshop") {
-
+    } else if (typeID == "joinWorkshop") {
+        Workshop* workshop = static_cast<Workshop*>(update);
+        this->_workshopList.insert(workshop);
+    } else if (typeID == "leaveWorkshop") {
+        Workshop* workshop = static_cast<Workshop*>(update);
+        this->_workshopList.erase(workshop);
+    } else if (typeID == "workWorkshop") {
+        // this->work();
     }
 }
 
@@ -81,7 +87,7 @@ Tool* Worker::returnTool(const std::string& toolName) {
         return *it;
     }
     std::cout << toolName << " not found in toolbox." << std::endl;
-    return NULL;
+    return NULL; 
 }
 
 std::set<Tool *>::iterator Worker::findTool(const std::string& toolName) {

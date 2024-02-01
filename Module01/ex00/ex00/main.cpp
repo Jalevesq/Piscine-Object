@@ -268,12 +268,14 @@ void test14() {
     Worker* workerA = new Worker;
     Worker* workerB = new Worker;
     Hammer* hammerA = new Hammer;
+    Tool* shovel = new Shovel;
     Hammer* returnedHammer = NULL;
 
 
     std::cout << GREEN << "TEST 14" << RESET << std::endl;
     std::cout << GREEN << "[BONUS] Trying GetTool function" << RESET << std::endl;
     workerA->giveNewTool(hammerA);
+    workerA->giveNewTool(shovel);
     workerA->useTool(HAMMER);
     workerA->useTool(HAMMER);
     returnedHammer = workerA->GetTool<Hammer>();
@@ -285,6 +287,21 @@ void test14() {
     delete workerB;
     delete workerA;
     delete hammerA;
+    delete shovel;
+}
+
+void test15() {
+    Workshop *workshopA = new Workshop;
+    Worker *workerA = new Worker;
+
+    std::cout << YELLOW << "TEST 15" << RESET << std::endl;
+    std::cout << YELLOW << "Testing workshop" << RESET << std::endl;
+
+    workshopA->Attach(workerA);
+
+    std::cout << YELLOW << "END OF TEST 15" << RESET << std::endl;
+    delete workshopA;
+    delete workerA;
 }
 
 int main(void) {
@@ -307,7 +324,7 @@ int main(void) {
     test12();
     test13();
     test14();
-
+    test15();
 
 
     delete tool;

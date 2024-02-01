@@ -9,7 +9,7 @@ class ISubject {
         virtual ~ISubject(){};
         virtual void Attach(IObserver *observer) = 0;
         virtual void Detach(IObserver *observer) = 0;
-        virtual void Notify() = 0;
+        virtual void Notify(const std::string& notifyType) = 0;
 };
 
 #endif

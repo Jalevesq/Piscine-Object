@@ -20,6 +20,8 @@ struct Statistic {
     int exp;
 };
 
+class Workshop;
+
 class Worker : public IObserver {
     public:
         Worker();
@@ -33,21 +35,22 @@ class Worker : public IObserver {
         ToolType* GetTool()  {
             std::set<Tool *>::iterator it = this->_toolBox.begin();
             while (it != this->_toolBox.end()) {
-            ToolType* castedTool = dynamic_cast<ToolType*>(*it);
+                ToolType* castedTool = dynamic_cast<ToolType*>(*it);
                 if (castedTool) {
                     return castedTool;
                 }
+                it++;
             }
             return NULL;
         }
+
         Tool* returnTool(const std::string& toolName);
         virtual void Update(void* update, const std::string& typeID);
-        // void joinWorkshop(Workshop* workshop);
-        // void leaveWorkshop(Workshop* workshop);
     private:
         Position _coordonnee;
         Statistic _stat;
         std::set<Tool *> _toolBox;
+        std::set<Workshop*> _workshopList;
 
         std::string checkTool(Tool* newShovel);
         std::set<Tool *>::iterator findTool(const std::string& toolName);

@@ -2,8 +2,9 @@
 # define WORKSHOP_HPP
 
 # include <iostream>
-# include <list>
-# include "Worker.hpp"
+# include <set>
+
+# include "IObserver.hpp"
 
 class Workshop : ISubject {
     public:
@@ -12,11 +13,14 @@ class Workshop : ISubject {
 
         void Attach(IObserver *observer);
         void Detach(IObserver *observer);
-        void Notify();
-        void HowManyObserver();
+        void Notify(const std::string& notifyType);
+
+        void executeWorkDay();
 
     private:
-        std::list<IObserver *> _list_observer;
+        void HowManyObserver();
+        std::set<IObserver *> _list_observer;
+        std::set<IObserver *>::iterator findWorker(IObserver* workerToFind);
 };
 
 #endif
