@@ -27,9 +27,23 @@ class Worker : public IObserver {
         void giveNewTool(Tool *newTool);
         void dropTool(const std::string& toolName);
         void useTool(const std::string& toolName);
+        
+
+        template <typename ToolType>
+        ToolType* GetTool()  {
+            std::set<Tool *>::iterator it = this->_toolBox.begin();
+            while (it != this->_toolBox.end()) {
+            ToolType* castedTool = dynamic_cast<ToolType*>(*it);
+                if (castedTool) {
+                    return castedTool;
+                }
+            }
+            return NULL;
+        }
         Tool* returnTool(const std::string& toolName);
-        // Create a method that return it's tool.
         virtual void Update(void* update, const std::string& typeID);
+        // void joinWorkshop(Workshop* workshop);
+        // void leaveWorkshop(Workshop* workshop);
     private:
         Position _coordonnee;
         Statistic _stat;

@@ -1,22 +1,22 @@
-// #ifndef WORKSHOP_HPP
-// # define WORKSHOP_HPP
+#ifndef WORKSHOP_HPP
+# define WORKSHOP_HPP
 
-// # include <iostream>
-// # include <list>
-// # include "Worker.hpp"
+# include <iostream>
+# include <list>
+# include "Worker.hpp"
 
-// class Workshop : ISubject<Worker> {
-//     public:
-//         Workshop();
-//         ~Workshop();
+class Workshop : ISubject {
+    public:
+        Workshop();
+        ~Workshop();
 
-//         void Attach(IObserver<Workshop> *observer);
-//         void Detach(IObserver<Workshop> *observer);
-//         void Notify();
-//         void HowManyObserver();
+        void Attach(IObserver *observer);
+        void Detach(IObserver *observer);
+        void Notify();
+        void HowManyObserver();
 
-//     private:
-//         std::list<IObserver<Workshop> *> _list_observer;
-// };
+    private:
+        std::list<IObserver *> _list_observer;
+};
 
-// #endif
+#endif
