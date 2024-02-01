@@ -25,18 +25,18 @@ class Worker : public IObserver {
         Worker();
         ~Worker();
         void giveNewTool(Tool *newTool);
-        void dropTool(Tool *tool);
-        void useTool(std::string toolName);
+        void dropTool(const std::string& toolName);
+        void useTool(const std::string& toolName);
+        Tool* returnTool(const std::string& toolName);
         // Create a method that return it's tool.
         virtual void Update(void* update, const std::string& typeID);
-        // void Update(Workshop *workshop);
     private:
         Position _coordonnee;
         Statistic _stat;
         std::set<Tool *> _toolBox;
 
-
         std::string checkTool(Tool* newShovel);
+        std::set<Tool *>::iterator findTool(const std::string& toolName);
 };
 
 

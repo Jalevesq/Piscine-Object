@@ -105,6 +105,7 @@ void test8() {
     workerA->useTool(SHOVEL);
 
 
+    std::cout << GREEN << "END OF TEST 8" << RESET << std::endl;
     delete toolB;
     delete workerA;
 }
@@ -159,6 +160,7 @@ void test10() {
     worker->useTool(HAMMER);    
 
     std::cout << BLUE << "END OF TEST 10" << RESET << std::endl;
+    delete worker;
 }
 
 void test11() {
@@ -194,6 +196,72 @@ void test11() {
 }
 
 void test12() {
+    Worker* workerA = new Worker;
+    Tool* hammerA = new Hammer;
+    Tool* hammerB = new Hammer;
+    Tool* shovelA = new Shovel;
+    Tool* shovelB = new Shovel;
+
+    std::cout << CYAN << "TEST 12" << RESET << std::endl;
+    std::cout << CYAN << "Trying to give multiple hammer and multiple shovel to a single worker" << RESET << std::endl;
+
+    workerA->giveNewTool(hammerA);
+    workerA->giveNewTool(hammerA);
+    workerA->giveNewTool(hammerB);
+    workerA->useTool(HAMMER);
+    
+    workerA->useTool(HAMMER);
+
+
+    workerA->giveNewTool(shovelA);
+    workerA->giveNewTool(shovelA);
+    workerA->giveNewTool(shovelB);
+
+    workerA->dropTool(HAMMER);
+    workerA->giveNewTool(hammerB);
+    workerA->useTool(HAMMER);
+    workerA->dropTool(HAMMER);
+    workerA->giveNewTool(hammerA);
+    workerA->useTool(HAMMER);
+
+    std::cout << CYAN << "END OF TEST 12" << RESET << std::endl;
+
+    delete workerA;
+    delete hammerA;
+    delete hammerB;
+    delete shovelA;
+    delete shovelB;
+}
+
+void test13() {
+
+    Worker* workerA = new Worker;
+    Worker* workerB = new Worker;
+    Tool* hammerA = new Hammer;
+    Tool* returnedHammer = NULL;
+
+    std::cout << RED << "TEST 13" <<  RESET << std::endl;
+    std::cout << RED << "Trying to use the returnTool method" << RESET << std::endl;
+
+
+    workerA->giveNewTool(hammerA);
+    workerA->useTool(HAMMER);
+    workerA->useTool(HAMMER);
+
+    returnedHammer = workerA->returnTool(HAMMER);
+    workerB->giveNewTool(returnedHammer);
+
+    workerB->useTool(HAMMER);z
+    workerA->useTool(HAMMER);
+
+    delete workerB;
+    workerA->giveNewTool(hammerA);
+    workerA->useTool(HAMMER);
+
+    std::cout << RED << "END OF TEST 13" << RESET << std::endl;
+    delete workerA;
+    delete hammerA;
+
 }
 
 int main(void) {
@@ -214,6 +282,8 @@ int main(void) {
     test10();
     test11();
     test12();
+    test13();
+
 
 
     delete tool;
