@@ -299,7 +299,7 @@ void test15() {
 
     workshopA->Attach(workerA);
 
-    std::cout << YELLOW << "END OF TEST 15" << RESET << std::endl;
+    std::cout << YELLOW << "END OFc TEST 15" << RESET << std::endl;
     delete workshopA;
     delete workerA;
 }
@@ -326,7 +326,7 @@ int main(void) {
     test14();
     test15();
 
-
+    
     delete tool;
     delete tool2;
     delete worker;

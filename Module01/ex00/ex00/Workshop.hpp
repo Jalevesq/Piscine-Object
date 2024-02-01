@@ -5,6 +5,7 @@
 # include <set>
 
 # include "IObserver.hpp"
+# include "ISubject.hpp"
 
 class Workshop : ISubject {
     public:
